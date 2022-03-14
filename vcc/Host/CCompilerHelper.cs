@@ -93,7 +93,7 @@ namespace Microsoft.Research.Vcc
     private static StreamReader StartClProcessAndReturnOutput(string fileName, string arguments, string outFileName, VccOptions commandLineOptions) {
 
       StringBuilder errors = new StringBuilder();
-      ProcessStartInfo info = ConfigureStartInfoForClVersion11Or10Or9(commandLineOptions);
+      ProcessStartInfo info = ConfigureStartInfoForClVersion140r11Or10Or9(commandLineOptions);
       info.Arguments = arguments;
       info.CreateNoWindow = true;
       info.RedirectStandardOutput = true;
@@ -147,7 +147,7 @@ namespace Microsoft.Research.Vcc
     /// VS90COMNTOOLS and setup the start info to invoke the found instance of cl, unless an explicit 
     /// location has been given as command line option.
     /// </summary>
-    private static ProcessStartInfo ConfigureStartInfoForClVersion11Or10Or9(VccOptions commandLineOptions) {
+    private static ProcessStartInfo ConfigureStartInfoForClVersion140r11Or10Or9(VccOptions commandLineOptions) {
       var envPath = Environment.GetEnvironmentVariable("PATH");
       var envInclude = Environment.GetEnvironmentVariable("INCLUDE");
       if (envPath != "") envPath = envPath + ";";
@@ -171,6 +171,7 @@ namespace Microsoft.Research.Vcc
         return result;
       } else {
         string VSCOMNTOOLS = Environment.GetEnvironmentVariable("VS110COMNTOOLS");
+        if (VSCOMNTOOLS == null) VSCOMNTOOLS = Environment.GetEnvironmentVariable("VS140COMNTOOLS");
         if (VSCOMNTOOLS == null) VSCOMNTOOLS = Environment.GetEnvironmentVariable("VS100COMNTOOLS");
         if (VSCOMNTOOLS == null) VSCOMNTOOLS = Environment.GetEnvironmentVariable("VS90COMNTOOLS");
         if (VSCOMNTOOLS == null) throw new FileNotFoundException();

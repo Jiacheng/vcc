@@ -201,8 +201,12 @@ if NOT "%VS100COMNTOOLS%"=="" (
   if NOT "%VS90COMNTOOLS%"=="" (
     call "%VS90COMNTOOLS%\..\..\VC\vcvarsall.bat" x86
   ) else (
-    echo Cannot find Visual Studio's vcvarsall.bat, tried VS100COMNTOOLS and VS90COMNTOOLS.
-    exit /b 1
+      if NOT "%VS140COMNTOOLS%"==""(
+	  call "%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" x86
+	  ) else (
+	  echo Cannot find Visual Studio's vcvarsall.bat, tried VS140COMMONTOOLS, VS100COMNTOOLS and VS90COMNTOOLS.
+      exit /b 1
+	)
   )
 )
 editbin /nologo /STACK:0x2000000 $(TargetPath)
@@ -220,8 +224,12 @@ sn -q -R  $(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) $(ProjectDir)\
     if NOT "%25VS90COMNTOOLS%25"=="" (
       call "%25VS90COMNTOOLS%25\..\..\VC\vcvarsall.bat" x86
     ) else (
-      echo Cannot find Visual Studio's vcvarsall.bat, tried VS100COMNTOOLS and VS90COMNTOOLS.
-      exit /b 1
+	  if not "%25VS140COMNTOOLS%25"=="" (
+        call "%25VS140COMNTOOLS%25\..\..\VC\vcvarsall.bat" x86
+	  ) else ( 
+        echo Cannot find Visual Studio's vcvarsall.bat, tried VS140COMNTOOLS, VS100COMNTOOLS and VS90COMNTOOLS.
+        exit /b 1
+	  )
     )
   )
 )
